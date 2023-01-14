@@ -1,0 +1,481 @@
+addi r11 r0 istate
+addi r23 r0 keys
+addi r13 r0 mmatrix
+add r22 r13 r0
+addi r12 r0 sbox
+addi r25 r0 msbtog
+lw r25 r25
+addi r21 r0 14
+ 	
+
+mainloop: lw r1 r11 0
+lw r2 r11 1
+lw r3 r11 2
+lw r4 r11 3
+lw r5 r23 0
+lw r6 r23 1
+lw r7 r23 2
+lw r8 r23 3
+xor r1 r1 r5
+xor r2 r2 r6
+xor r3 r3 r7
+xor r4 r4 r8
+add r15 r0 r0
+add r16 r0 r0
+add r17 r0 r0
+add r18 r0 r0
+addi r7 r0 1
+addi r10 r0 32
+addi r9 r0 1
+addi r27 r0 0
+addi r26 r0 0
+
+loop1: and r5 r1 r9
+and r6 r2 r9
+slli r5 r5
+or r5 r5 r6
+and r6 r3 r9
+slli r5 r5
+or r5 r5 r6
+and r6 r4 r9
+slli r5 r5
+or r5 r5 r6
+add r5 r5 r12
+lw r8 r5 0
+and r28 r8 r7  
+
+srli r8 r8
+and r29 r8 r7
+
+srli r8 r8
+and r30 r8 r7
+
+srli r8 r8
+and r31 r8 r7
+
+sub r10 r10 r7
+srli r1 r1
+srli r2 r2
+srli r3 r3
+srli r4 r4
+bnez r7 rotate
+cont: bnez r10 loop1
+bnez r7 next
+rotate: beqz r26 save
+iter: slli r28 r28
+slli r29 r29
+slli r30 r30
+slli r31 r31
+sub r26 r26 r7
+bnez r26 iter
+bnez r7 save 
+save: or r18 r18 r28
+or r17 r17 r29
+or r16 r16 r30
+or r15 r15 r31
+add r27 r27 r7
+add r26 r27 r0
+bnez r7 cont
+
+
+next: addi r7 r0 1
+addi r8 r0 32
+addi r20 r0 0
+add r1 r0 r0
+add r30 r0 r15    
+outloop1: addi r10 r0 32
+srli r1 r1
+add r5 r0 r25
+add r27 r13 r20
+add r15 r30 r0
+lw r6 r27 0
+
+midloop1: and r2 r6 r5
+and r3 r15 r5
+and r4 r2 r3
+xor r1 r1 r4
+slli r15 r15
+slli r6 r6
+sub r10 r10 r7
+bnez r10 midloop1
+sub r8 r8 r7
+addi r20 r20 1
+bnez r8 outloop1
+sw r1 r11 0
+addi r13 r13 32
+
+ 
+addi r7 r0 1
+addi r8 r0 32
+addi r20 r0 0
+add r1 r0 r0
+add r30 r0 r16    
+outloop2: addi r10 r0 32
+srli r1 r1
+add r5 r0 r25
+add r27 r13 r20
+add r16 r30 r0
+lw r6 r27 0
+
+midloop2: and r2 r6 r5
+and r3 r16 r5
+and r4 r2 r3
+xor r1 r1 r4
+slli r16 r16
+slli r6 r6
+sub r10 r10 r7
+bnez r10 midloop2
+sub r8 r8 r7
+addi r20 r20 1
+bnez r8 outloop2
+sw r1 r11 1
+addi r13 r13 32
+ 
+
+addi r7 r0 1
+addi r8 r0 32
+addi r20 r0 0
+add r1 r0 r0
+add r30 r0 r17    
+outloop3: addi r10 r0 32
+srli r1 r1
+add r5 r0 r25
+add r27 r13 r20
+add r17 r30 r0
+lw r6 r27 0
+
+midloop3: and r2 r6 r5
+and r3 r17 r5
+and r4 r2 r3
+xor r1 r1 r4
+slli r17 r17
+slli r6 r6
+sub r10 r10 r7
+bnez r10 midloop3
+sub r8 r8 r7
+addi r20 r20 1
+bnez r8 outloop3
+sw r1 r11 2
+addi r13 r13 32
+
+
+addi r7 r0 1
+addi r8 r0 32
+addi r20 r0 0
+add r1 r0 r0
+add r30 r0 r18    
+outloop4: addi r10 r0 32
+srli r1 r1
+add r5 r0 r25
+add r27 r13 r20
+add r18 r30 r0
+lw r6 r27 0
+
+midloop4: and r2 r6 r5
+and r3 r18 r5
+and r4 r2 r3
+xor r1 r1 r4
+slli r18 r18
+slli r6 r6
+sub r10 r10 r7
+bnez r10 midloop4
+sub r8 r8 r7
+addi r20 r20 1
+bnez r8 outloop4
+sw r1 r11 3
+lw r28 r11 0
+lw r29 r11 1
+lw r30 r11 2
+lw r31 r11 3
+addi r15 r0 0
+addi r16 r0 0
+addi r17 r0 0
+addi r18 r0 0
+add r5 r0 r25
+addi r1 r0 16
+addi r6 r0 31
+iter2: add r2 r0 r6
+and r3 r28 r5
+and r8 r29 r5
+and r9 r30 r5
+and r10 r31 r5 
+iter1: srli r3 r3
+srli r8 r8
+srli r9 r9
+srli r10 r10
+sub r2 r2 r7
+bnez r2 iter1
+or r15 r15 r3
+or r16 r16 r8
+or r17 r17 r9
+or r18 r18 r10
+sub r1 r1 r7
+sub r6 r6 r7
+sub r6 r6 r7
+beqz r1 left
+srli r5 r5
+bnez r7 iter2
+left: addi r5 r0 1
+addi r1 r0 16
+addi r6 r0 31
+iter3: add r2 r0 r6
+and r3 r28 r5
+and r8 r29 r5
+and r9 r30 r5
+and r10 r31 r5  
+iter4: slli r3 r3
+slli r8 r8
+slli r9 r9
+slli r10 r10
+sub r2 r2 r7
+bnez r2 iter4
+or r15 r15 r3
+or r16 r16 r8
+or r17 r17 r9
+or r18 r18 r10
+sub r1 r1 r7
+sub r6 r6 r7
+sub r6 r6 r7
+beqz r1 end
+slli r5 r5
+bnez r7 iter3
+end: sw r15 r11 0
+sw r16 r11 1
+sw r17 r11 2
+sw r18 r11 3
+
+add r13 r0 r22
+addi r23 r23 4
+sub r21 r21 r7
+bnez r21 mainloop 
+lw r1 r11 0
+lw r2 r11 1
+lw r3 r11 2
+lw r4 r11 3
+lw r5 r23 0
+lw r6 r23 1
+lw r7 r23 2
+lw r8 r23 3
+xor r1 r1 r5
+xor r2 r2 r6
+xor r3 r3 r7
+xor r4 r4 r8
+halt
+
+msbtog: dc 0x80000000
+
+istate: dc 0x418a0d00
+dc 0x1ee12c74
+dc 0x56d44e68
+dc 0xdbc4f728
+keys: dc 0x00010203
+dc 0x04050607
+dc 0x08090a0b
+dc 0x0c0d0e0f
+dc 0xe677cfde
+dc 0x07046f06
+dc 0x14291012
+dc 0x6783c303
+dc 0x4c9a5b66
+dc 0xcf95b71c
+dc 0xc7880de0
+dc 0x8832bd56
+dc 0xcffe6ff5
+dc 0xd0034aeb
+dc 0xa267167a
+dc 0xdc669121
+dc 0xe4cb2b35
+dc 0xaeb195e8
+dc 0x68408737
+dc 0xa8d92f66
+dc 0xcc59f6a1
+dc 0x64243883
+dc 0x2348c547
+dc 0xaa7a888e
+dc 0x9026d3dd
+dc 0x684501bb
+dc 0x8d67040e
+dc 0x66d962cd
+dc 0x29487cc3
+dc 0x1e7bf2b5
+dc 0x61683d75
+dc 0x119a1d41
+dc 0xa703fa1a
+dc 0xf759d05c
+dc 0x26514d53
+dc 0xc8c0d596
+dc 0x75498d39
+dc 0xdf49f862
+dc 0xff9e3135
+dc 0xfdc55d82
+dc 0xe1f0a4a9
+dc 0x8e7778e1
+dc 0x518daf8a
+dc 0xb51b9567
+dc 0xcbc11b32
+dc 0x44050c9e
+dc 0x9260b538
+dc 0xb8f08f82
+dc 0xdee0bcc4
+dc 0x88e13b21
+dc 0x30636e69
+dc 0x0ca50769
+dc 0x8067ba2c
+dc 0xc4e24cd5
+dc 0x0127b549
+dc 0x9e631998
+dc 0x4172f631
+dc 0xfd1f4916
+dc 0xdefcb5cd
+dc 0xb4ec1168
+sbox: dc 0x00000002
+dc 0x0000000d
+dc 0x00000003
+dc 0x00000009
+dc 0x00000007
+dc 0x0000000b
+dc 0x0000000a
+dc 0x00000006
+dc 0x0000000e
+dc 0x00000000
+dc 0x0000000f
+dc 0x00000004
+dc 0x00000008
+dc 0x00000005
+dc 0x00000001
+dc 0x0000000c
+
+mmatrix: dc 0xD08430E2
+dc 0x68421871
+dc 0xB4210C38
+dc 0x5A10861C
+dc 0x2D08430E
+dc 0x16842187
+dc 0x8B4210C3
+dc 0xC5A10861
+dc 0xE2D08430
+dc 0x71684218
+dc 0x38B4210C
+dc 0x1C5A1086
+dc 0x0E2D0843
+dc 0x87168421
+dc 0xC38B4210
+dc 0x61C5A108
+dc 0x30E2D084
+dc 0x18716842
+dc 0x0C38B421
+dc 0x861C5A10
+dc 0x430E2D08
+dc 0x21871684
+dc 0x10C38B42
+dc 0x0861C5A1
+dc 0x8430E2D0
+dc 0x42187168
+dc 0x210C38B4
+dc 0x10861C5A
+dc 0x08430E2D
+dc 0x84218716
+dc 0x4210C38B
+dc 0xA10861C5
+
+dc 0x42074163
+dc 0xA103A0B1
+dc 0xD081D058
+dc 0x6840E82C
+dc 0x34207416
+dc 0x1A103A0B
+dc 0x8D081D05
+dc 0xC6840E82
+dc 0x63420741
+dc 0xB1A103A0
+dc 0x58D081D0
+dc 0x2C6840E8
+dc 0x16342074
+dc 0x0B1A103A
+dc 0x058D081D
+dc 0x82C6840E
+dc 0x41634207
+dc 0xA0B1A103
+dc 0xD058D081
+dc 0xE82C6840
+dc 0x74163420
+dc 0x3A0B1A10
+dc 0x1D058D08
+dc 0x0E82C684
+dc 0x07416342
+dc 0x03A0B1A1
+dc 0x81D058D0
+dc 0x40E82C68
+dc 0x20741634
+dc 0x103A0B1A
+dc 0x081D058D
+dc 0x840E82C6
+
+dc 0x00A79A4B
+dc 0x8053CD25
+dc 0xC029E692
+dc 0x6014F349
+dc 0xB00A79A4
+dc 0x58053CD2
+dc 0x2C029E69
+dc 0x96014F34
+dc 0x4B00A79A
+dc 0x258053CD
+dc 0x92C029E6
+dc 0x496014F3
+dc 0xA4B00A79
+dc 0xD258053C
+dc 0x692C029E
+dc 0x3496014F
+dc 0x9A4B00A7
+dc 0xCD258053
+dc 0xE692C029
+dc 0xF3496014
+dc 0x79A4B00A
+dc 0x3CD25805
+dc 0x9E692C02
+dc 0x4F349601
+dc 0xA79A4B00
+dc 0x53CD2580
+dc 0x29E692C0
+dc 0x14F34960
+dc 0x0A79A4B0
+dc 0x053CD258
+dc 0x029E692C
+dc 0x014F3496
+
+dc 0x64095289
+dc 0xB204A944
+dc 0x590254A2
+dc 0x2C812A51
+dc 0x96409528
+dc 0x4B204A94
+dc 0x2590254A
+dc 0x12C812A5
+dc 0x89640952
+dc 0x44B204A9
+dc 0xA2590254
+dc 0x512C812A
+dc 0x28964095
+dc 0x944B204A
+dc 0x4A259025
+dc 0xA512C812
+dc 0x52896409
+dc 0xA944B204
+dc 0x54A25902
+dc 0x2A512C81
+dc 0x95289640
+dc 0x4A944B20
+dc 0x254A2590
+dc 0x12A512C8
+dc 0x09528964
+dc 0x04A944B2
+dc 0x0254A259
+dc 0x812A512C
+dc 0x40952896
+dc 0x204A944B
+dc 0x90254A25
+dc 0xC812A512
+
+
+
