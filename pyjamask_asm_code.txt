@@ -81,21 +81,16 @@ bnez r7 cont
 next: addi r7 r0 1
 addi r8 r0 32
 addi r20 r0 0
-add r1 r0 r0
-add r30 r0 r15    
+add r1 r0 r0   
 outloop1: addi r10 r0 32
 srli r1 r1
-add r5 r0 r25
 add r27 r13 r20
-add r15 r30 r0
 lw r6 r27 0
 
-midloop1: and r2 r6 r5
-and r3 r15 r5
-and r4 r2 r3
+and r2 r6 r15
+midloop1: and r4 r2 r25
+slli r2 r2
 xor r1 r1 r4
-slli r15 r15
-slli r6 r6
 sub r10 r10 r7
 bnez r10 midloop1
 sub r8 r8 r7
@@ -108,21 +103,16 @@ addi r13 r13 32
 addi r7 r0 1
 addi r8 r0 32
 addi r20 r0 0
-add r1 r0 r0
-add r30 r0 r16    
+add r1 r0 r0  
 outloop2: addi r10 r0 32
 srli r1 r1
-add r5 r0 r25
 add r27 r13 r20
-add r16 r30 r0
 lw r6 r27 0
 
-midloop2: and r2 r6 r5
-and r3 r16 r5
-and r4 r2 r3
+and r2 r6 r16
+midloop2: and r4 r2 r25
+slli r2 r2
 xor r1 r1 r4
-slli r16 r16
-slli r6 r6
 sub r10 r10 r7
 bnez r10 midloop2
 sub r8 r8 r7
@@ -135,21 +125,16 @@ addi r13 r13 32
 addi r7 r0 1
 addi r8 r0 32
 addi r20 r0 0
-add r1 r0 r0
-add r30 r0 r17    
+add r1 r0 r0   
 outloop3: addi r10 r0 32
 srli r1 r1
-add r5 r0 r25
 add r27 r13 r20
-add r17 r30 r0
 lw r6 r27 0
 
-midloop3: and r2 r6 r5
-and r3 r17 r5
-and r4 r2 r3
+and r2 r6 r17
+midloop3: and r4 r2 r25
+slli r2 r2
 xor r1 r1 r4
-slli r17 r17
-slli r6 r6
 sub r10 r10 r7
 bnez r10 midloop3
 sub r8 r8 r7
@@ -162,21 +147,16 @@ addi r13 r13 32
 addi r7 r0 1
 addi r8 r0 32
 addi r20 r0 0
-add r1 r0 r0
-add r30 r0 r18    
+add r1 r0 r0   
 outloop4: addi r10 r0 32
 srli r1 r1
-add r5 r0 r25
 add r27 r13 r20
-add r18 r30 r0
 lw r6 r27 0
 
-midloop4: and r2 r6 r5
-and r3 r18 r5
-and r4 r2 r3
+and r2 r6 r18
+midloop4: and r4 r2 r25
+slli r2 r2
 xor r1 r1 r4
-slli r18 r18
-slli r6 r6
 sub r10 r10 r7
 bnez r10 midloop4
 sub r8 r8 r7
@@ -476,6 +456,5 @@ dc 0x40952896
 dc 0x204A944B
 dc 0x90254A25
 dc 0xC812A512
-
 
 
